@@ -16,9 +16,9 @@ namespace Quest
             //   a number of awesome points to gain or lose depending on the success of the challenge
             Challenge twoPlusTwo = new Challenge("2 + 2?", 4, 10);
             Challenge theAnswer = new Challenge(
-                "What's the answer to life, the universe and everything?", 42, 25);
+                "What's the answer to life, the universe and everything?", 42, 50);
             Challenge whatSecond = new Challenge(
-                "What is the current second?", DateTime.Now.Second, 50);
+                "What is the current second?", DateTime.Now.Second, 25);
 
             int randomNumber = new Random().Next() % 10;
             Challenge guessRandom = new Challenge("What number am I thinking of?", randomNumber, 25);
@@ -43,7 +43,14 @@ namespace Quest
             int maxAwesomeness = 100;
 
             // Make a new "Adventurer" object using the "Adventurer" class
-            Adventurer theAdventurer = new Adventurer("Jack");
+            Console.WriteLine("Who goes there?");
+            string userName = Console.ReadLine();
+            Adventurer theAdventurer = new Adventurer(userName, purple);
+            Robe purple = new Robe()
+            {
+                Color = "purple",
+                Length = 50,
+            };
 
             // A list of challenges for the Adventurer to complete
             // Note we can use the List class here because have the line "using System.Collections.Generic;" at the top of the file.
@@ -57,25 +64,36 @@ namespace Quest
             };
 
             // Loop through all the challenges and subject the Adventurer to them
-            foreach (Challenge challenge in challenges)
+            void theGame()
             {
-                challenge.RunChallenge(theAdventurer);
-            }
+                foreach (Challenge challenge in challenges)
+                {
+                    challenge.RunChallenge(theAdventurer);
+                }
 
-            // This code examines how Awesome the Adventurer is after completing the challenges
-            // And praises or humiliates them accordingly
-            if (theAdventurer.Awesomeness >= maxAwesomeness)
-            {
-                Console.WriteLine("YOU DID IT! You are truly awesome!");
+                // This code examines how Awesome the Adventurer is after completing the challenges
+                // And praises or humiliates them accordingly
+                if (theAdventurer.Awesomeness >= maxAwesomeness)
+                {
+                    Console.WriteLine("YOU DID IT! You are truly awesome!");
+                }
+                else if (theAdventurer.Awesomeness <= minAwesomeness)
+                {
+                    Console.WriteLine("Get out of my sight. Your lack of awesomeness offends me!");
+                }
+                else
+                {
+                    Console.WriteLine("I guess you did...ok? ...sorta. Still, you should get out of my sight.");
+                }
+
+                Console.Write("Would you like to try again (y/n)?");
+                string playAgain = Console.ReadLine();
+                if (playAgain == "y")
+                {
+                    theGame();
+                }
             }
-            else if (theAdventurer.Awesomeness <= minAwesomeness)
-            {
-                Console.WriteLine("Get out of my sight. Your lack of awesomeness offends me!");
-            }
-            else
-            {
-                Console.WriteLine("I guess you did...ok? ...sorta. Still, you should get out of my sight.");
-            }
+            theGame();
         }
     }
 }
