@@ -40,6 +40,7 @@ namespace Quest
 
                 // Note how we access an Adventurer object's property
                 adventurer.Awesomeness += _awesomenessChange;
+                adventurer.SuccessCounter ++;
             }
             else
             {
